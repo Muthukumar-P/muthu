@@ -477,8 +477,31 @@ namespace HiSpaceService.Controllers
                                   Status = FP.Status,
                                   FloorPlanFilePath = FP.FloorPlanFilePath,
                                   ContactPersonName = CL.ContactPersonName,
-                                  Verification = FP.Verification
-                              });
+                                  Verification = FP.Verification,
+								  Is24 = FP.Is24,
+								  SunAvail = FP.SunAvail,
+								  SunClose = FP.SunClose,
+								  SunOpen = FP.SunOpen,
+								  MonAvail = FP.MonAvail,
+								  MonClose = FP.MonClose,
+								  MonOpen = FP.MonOpen,
+								  TueAvail = FP.TueAvail,
+								  TueClose = FP.TueClose,
+								  TueOpen = FP.TueOpen,
+								  WedAvail = FP.WedAvail,
+								  WedClose = FP.WedClose,
+								  WedOpen = FP.WedOpen,
+								  ThuAvail = FP.ThuAvail,
+								  ThuClose = FP.ThuClose,
+								  ThuOpen = FP.ThuOpen,
+								  FriAvail = FP.FriAvail,
+								  FriClose = FP.FriClose,
+								  FriOpen = FP.FriOpen,
+								  SatAvail = FP.SatAvail,
+								  SatClose = FP.SatClose,
+								  SatOpen = FP.SatOpen
+
+							  });
                 return result.ToList();
             }
             else if (ClientID != 0 && ClientLocationID != 0)
@@ -516,8 +539,30 @@ namespace HiSpaceService.Controllers
                                   Status = FP.Status,
                                   FloorPlanFilePath = FP.FloorPlanFilePath,
                                   ContactPersonName = CL.ContactPersonName,
-                                  Verification = FP.Verification
-                              });
+                                  Verification = FP.Verification,
+								  Is24 = FP.Is24,
+								  SunAvail = FP.SunAvail,
+								  SunClose = FP.SunClose,
+								  SunOpen = FP.SunOpen,
+								  MonAvail = FP.MonAvail,
+								  MonClose = FP.MonClose,
+								  MonOpen = FP.MonOpen,
+								  TueAvail = FP.TueAvail,
+								  TueClose = FP.TueClose,
+								  TueOpen = FP.TueOpen,
+								  WedAvail = FP.WedAvail,
+								  WedClose = FP.WedClose,
+								  WedOpen = FP.WedOpen,
+								  ThuAvail = FP.ThuAvail,
+								  ThuClose = FP.ThuClose,
+								  ThuOpen = FP.ThuOpen,
+								  FriAvail = FP.FriAvail,
+								  FriClose = FP.FriClose,
+								  FriOpen = FP.FriOpen,
+								  SatAvail = FP.SatAvail,
+								  SatClose = FP.SatClose,
+								  SatOpen = FP.SatOpen
+							  });
                 return result.ToList();
             }
             else
@@ -555,8 +600,30 @@ namespace HiSpaceService.Controllers
                                   Status = FP.Status,
                                   FloorPlanFilePath = FP.FloorPlanFilePath,
                                   ContactPersonName = CL.ContactPersonName,
-                                  Verification = FP.Verification
-                              });
+                                  Verification = FP.Verification,
+								  Is24 = FP.Is24,
+								  SunAvail = FP.SunAvail,
+								  SunClose = FP.SunClose,
+								  SunOpen = FP.SunOpen,
+								  MonAvail = FP.MonAvail,
+								  MonClose = FP.MonClose,
+								  MonOpen = FP.MonOpen,
+								  TueAvail = FP.TueAvail,
+								  TueClose = FP.TueClose,
+								  TueOpen = FP.TueOpen,
+								  WedAvail = FP.WedAvail,
+								  WedClose = FP.WedClose,
+								  WedOpen = FP.WedOpen,
+								  ThuAvail = FP.ThuAvail,
+								  ThuClose = FP.ThuClose,
+								  ThuOpen = FP.ThuOpen,
+								  FriAvail = FP.FriAvail,
+								  FriClose = FP.FriClose,
+								  FriOpen = FP.FriOpen,
+								  SatAvail = FP.SatAvail,
+								  SatClose = FP.SatClose,
+								  SatOpen = FP.SatOpen
+							  });
                 return result.ToList();
             }
 
