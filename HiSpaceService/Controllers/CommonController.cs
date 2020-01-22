@@ -155,11 +155,11 @@ namespace HiSpaceService.Controllers
                     {
                         NotificationID = user.ClientID.Value,
                         NotificationName = Notifications.SpaceBookingRequest,
-                        NotificationDescription = spaces.Count() +" "+ Notifications.Names[Notifications.SpaceBookingRequest]
+                        NotificationDescription = spaces.Count() + " " + Notifications.Names[Notifications.SpaceBookingRequest]
                     });
                 }
 
-                if (client == null)
+                if (client != null)
                 {
 
                     if (string.IsNullOrEmpty(client.GSTIN) ||
@@ -190,6 +190,15 @@ namespace HiSpaceService.Controllers
                             NotificationName = Notifications.ClientVerification,
                             NotificationDescription = Notifications.Names[Notifications.ClientVerification]
                         });
+                }
+                else
+                {
+                    notifications.Add(new PendingNotificationResponse()
+                    {
+                        NotificationID = user.ClientID.Value,
+                        NotificationName = Notifications.ClientProfilePending,
+                        NotificationDescription = Notifications.Names[Notifications.ClientProfilePending]
+                    });
                 }
 
                 var floor = _context.ClientFloors.Where(d => d.ClientID == user.ClientID);
@@ -292,18 +301,18 @@ namespace HiSpaceService.Controllers
         {
             List<AmenitiesSearchResponse> response = new List<AmenitiesSearchResponse>();
             var amenities = await _context.FacilityMasters.OrderBy(d => d.CategoryName).ToListAsync();
-            foreach(var item in amenities)
+            foreach (var item in amenities)
             {
-                response.Add(new AmenitiesSearchResponse() 
+                response.Add(new AmenitiesSearchResponse()
                 {
-                    FacilityID=item.FacilityID,
-                    FacilityName=item.FacilityName,
-                    CategoryName=item.CategoryName,
+                    FacilityID = item.FacilityID,
+                    FacilityName = item.FacilityName,
+                    CategoryName = item.CategoryName,
                     FacilityInUseCount = _context.ClientFacilities.Count(d => d.FacilityID == item.FacilityID)
                 });
             }
             return response;
-        }              
+        }
 
         /// <summary>
         /// Get all work space types with usage count

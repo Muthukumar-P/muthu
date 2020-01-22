@@ -67,6 +67,12 @@ namespace HiSpaceService.Contracts
 
     }
 
+    public static class VerificationStatus
+    {
+        public const string Pending = "Pending";
+        public const string Approved = "Approved";
+    }
+
     public static class MemberBookingStatus
     {
         public const string Requested = "Requested";

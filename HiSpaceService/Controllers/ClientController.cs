@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using HiSpaceModels;
+using HiSpaceService.Contracts;
 using HiSpaceService.Models;
 using HiSpaceService.ViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -219,7 +220,7 @@ namespace HiSpaceService.Controllers
         // POST: api/Client
         [HttpPost("AddClientLocation")]
         public async Task<ActionResult<ClientLocation>> AddClientLocation([FromBody] ClientLocation clientLocation)
-        {
+        {            
             _context.ClientLocations.Add(clientLocation);
             await _context.SaveChangesAsync();
 
@@ -379,7 +380,7 @@ namespace HiSpaceService.Controllers
         public async Task<ActionResult<IEnumerable<SpaceDetailsListSearchResponse>>> GetClientWorkSpaceFloorPlanList()
         {
             List<SpaceDetailsListSearchResponse> lst = new List<SpaceDetailsListSearchResponse>();
-            var spaces = await _context.ClientWorkSpaceFloorPlans.Where(m => m.Verification == "Approved").OrderByDescending(d => d.CreatedDateTime).ToListAsync();
+            var spaces = await _context.ClientWorkSpaceFloorPlans.Where(m => m.Verification == VerificationStatus.Approved && (m.Status == ClientBookingStatus.Available || m.Status == ClientBookingStatus.Partial)).OrderByDescending(d => d.CreatedDateTime).ToListAsync();
 
             foreach (var item in spaces)
             {
@@ -392,8 +393,8 @@ namespace HiSpaceService.Controllers
                                              where CF.ClientID == item.ClientID && CF.ClientFloorID == item.ClientFloorID && CF.Available
                                              select new FacilityMaster() { FacilityID = CF.FacilityID, FacilityName = FM.FacilityName }
                             ).ToList().Count();
-                space.AvailableSeats = _context.ClientSpaceSeats.Count(m => m.ClientSpaceFloorPlanID == item.ClientSpaceFloorPlanID && m.SeatStatus == "Available");
-                space.OccupiedSeats = _context.ClientSpaceSeats.Count(m => m.ClientSpaceFloorPlanID == item.ClientSpaceFloorPlanID && m.SeatStatus == "Occupied");
+                space.AvailableSeats = _context.ClientSpaceSeats.Count(m => m.ClientSpaceFloorPlanID == item.ClientSpaceFloorPlanID && m.SeatStatus == ClientBookingStatus.Available);
+                space.OccupiedSeats = _context.ClientSpaceSeats.Count(m => m.ClientSpaceFloorPlanID == item.ClientSpaceFloorPlanID && m.SeatStatus == ClientBookingStatus.Occupied);
 
                 lst.Add(space);
             }

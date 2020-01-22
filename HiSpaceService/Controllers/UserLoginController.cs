@@ -177,9 +177,10 @@ namespace HiSpaceService.Controllers
 
 
         [HttpPost("SignupUser")]
-        public async Task<ActionResult<bool>> SignupUser([FromBody] SignupUser user)
+        public async Task<ActionResult<UserLogin>> SignupUser([FromBody] SignupUser user)
         {
-            bool result = false;
+            UserLogin newUser = new UserLogin();
+
             using (var trans = _context.Database.BeginTransaction())
             {
                 try
@@ -189,7 +190,11 @@ namespace HiSpaceService.Controllers
                         if (!_context.ClientMasters.Any(d => d.ClientName == user.Username))
                         {
                             ClientMaster cl = new ClientMaster();
-                            cl.ClientName = user.Username;
+                            //cl.ClientName = user.Username;
+                            cl.ClientName = user.Firstname + " " + user.Lastname;
+                            cl.Email = user.Email;
+                            cl.ClientNumber = user.Number;
+                            cl.CreatedDateTime = DateTime.Now;
                             _context.ClientMasters.Add(cl);
                             await _context.SaveChangesAsync();
 
@@ -197,16 +202,16 @@ namespace HiSpaceService.Controllers
 
                             if (!_context.UserLogins.Any(d => d.Username == user.Username))
                             {
-                                UserLogin ur = new UserLogin();
-                                ur.Username = user.Username;
-                                ur.Password = user.Password;
-                                ur.UserType = 2;
-                                ur.ClientID = cl.ClientID;
-                                _context.UserLogins.Add(ur);
+                                newUser.Username = user.Username;
+                                newUser.Password = user.Password;
+                                newUser.UserType = 2;
+                                newUser.ClientID = cl.ClientID;
+                                newUser.Active = user.IsActive;
+                                newUser.CreatedDateTime = DateTime.Now;
+                                _context.UserLogins.Add(newUser);
                                 await _context.SaveChangesAsync();
                             }
 
-                            result = true;
                         }
                     }
                     else
@@ -214,7 +219,10 @@ namespace HiSpaceService.Controllers
                         if (!_context.Members.Any(d => d.MemberName == user.Username))
                         {
                             MemberMaster me = new MemberMaster();
-                            me.MemberName = user.Username;
+                            me.MemberName = user.Firstname + " " + user.Lastname;
+                            me.Email = user.Email;
+                            me.Number = user.Number;
+                            me.CreatedDateTime = DateTime.Now;
                             _context.Members.Add(me);
                             await _context.SaveChangesAsync();
 
@@ -222,16 +230,14 @@ namespace HiSpaceService.Controllers
 
                             if (!_context.UserLogins.Any(d => d.Username == user.Username))
                             {
-                                UserLogin ur = new UserLogin();
-                                ur.Username = user.Username;
-                                ur.Password = user.Password;
-                                ur.UserType = 4;
-                                ur.MemberID = me.MemberID;
-                                _context.UserLogins.Add(ur);
+                                newUser.Username = user.Username;
+                                newUser.Password = user.Password;
+                                newUser.UserType = 4;
+                                newUser.MemberID = me.MemberID;
+                                newUser.CreatedDateTime = DateTime.Now;
+                                _context.UserLogins.Add(newUser);
                                 await _context.SaveChangesAsync();
                             }
-
-                            result = true;
                         }
                     }
 
@@ -240,10 +246,9 @@ namespace HiSpaceService.Controllers
                 catch (Exception err)
                 {
                     trans.Rollback();
-                    result = false;
                 }
             }
-            return result;
+            return newUser;
         }
 
         // GET: http://1.1.1.1/BMW/api/UserLogins/UserLoginExist

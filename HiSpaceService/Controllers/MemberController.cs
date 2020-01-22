@@ -149,13 +149,13 @@ namespace HiSpaceService.Controllers
             if (MemberID != 0)
             {
                 var result = (from MB in _context.MemberBookingSpaces
-                              join FP in _context.ClientWorkSpaceFloorPlans on MB.ClientSpaceFloorPlanID equals FP.ClientSpaceFloorPlanID
+                              join FP in _context.ClientWorkSpaceFloorPlans on MB.ClientSpaceFloorPlanID equals FP.ClientSpaceFloorPlanID                              
                               join FL in _context.ClientFloors on FP.ClientFloorID equals FL.ClientFloorID
                               join CM in _context.ClientMasters on FP.ClientID equals CM.ClientID
                               join CL in _context.ClientLocations on FP.ClientLocationID equals CL.ClientLocationID
                               join ST in _context.WSpaceTypeNames on FP.WSpaceTypeID equals ST.WSpaceTypeID
                               join MM in _context.Members on MB.MemberID equals MM.MemberID
-                              where MB.MemberID == MemberID && MB.ClientID == ClientID
+                              where MB.MemberID == MemberID //&& MB.ClientID == ClientID
                               select new MemberBookingResponse()
                               {
                                   MemberBookingSpaceID = MB.MemberBookingSpaceID,
@@ -168,7 +168,7 @@ namespace HiSpaceService.Controllers
                                   BookingStatus = MB.BookingStatus,
                                   WSpaceTypeName = ST.WSpaceTypeName,
                                   Floor = FL.FloorNumber,
-                                  NumberOfSeats = FP.NumberOfSeats,
+                                  NumberOfSeats = _context.MemberBookingSpaceSeats.Count(d => d.MemberBookingSpaceID == MB.MemberBookingSpaceID && d.SeatStatus == MemberBookingStatus.Requested),
                                   SpacePrice = MB.SpacePrice
                               });
 
@@ -196,7 +196,7 @@ namespace HiSpaceService.Controllers
                                   BookingStatus = MB.BookingStatus,
                                   WSpaceTypeName = ST.WSpaceTypeName,
                                   Floor = FL.FloorNumber,
-                                  NumberOfSeats = FP.NumberOfSeats,
+                                  NumberOfSeats = _context.MemberBookingSpaceSeats.Count(d => d.MemberBookingSpaceID == MB.MemberBookingSpaceID && d.SeatStatus == MemberBookingStatus.Requested),
                                   SpacePrice = MB.SpacePrice
                               });
 
@@ -289,6 +289,16 @@ namespace HiSpaceService.Controllers
 
             
         }
+
+
+        #region private methods
+
+        private int GetNumberOfRequestedSeats(int MemberBookingSpaceID)
+        {
+            return _context.MemberBookingSpaceSeats.Count(d => d.MemberBookingSpaceID == MemberBookingSpaceID && d.SeatStatus == MemberBookingStatus.Requested);
+        }
+
+        #endregion
 
         #endregion
 
