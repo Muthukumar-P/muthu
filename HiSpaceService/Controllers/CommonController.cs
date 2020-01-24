@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HiSpaceService.Contracts;
 using HiSpaceService.ViewModel;
+using HiSpaceService.Utilities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -336,6 +337,32 @@ namespace HiSpaceService.Controllers
                 });
             }
             return response;
+        }
+
+        /// <summary>
+        /// SendMobileSMSOTP
+        /// </summary>            
+        /// <response code="200">Return response</response>
+        /// <response code="400">Unable to process</response>
+        // GET: api/Common
+        [Route(template: ApiRoutes.Common.SendMobileSMSOTP)]
+        [HttpGet]
+        public async Task<ActionResult<string>> SendMobileSMSOTP()
+        {
+            return InternetSMS.Send();
+        }
+
+        /// <summary>
+        /// SendEmailOTP
+        /// </summary>            
+        /// <response code="200">Return response</response>
+        /// <response code="400">Unable to process</response>
+        // GET: api/Common
+        [Route(template: ApiRoutes.Common.SendEmailOTP)]
+        [HttpGet]
+        public async Task<ActionResult<bool>> SendEmailOTP()
+        {
+            return EMailMessage.Send();
         }
     }
 }

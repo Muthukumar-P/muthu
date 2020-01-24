@@ -25,6 +25,9 @@ namespace HiSpaceService.Contracts
             public const string GetAllAmenitiesSearch = "GetAllAmenitiesSearch";
             public const string GetAllWorkSpaceTypesSearch = "GetAllWorkSpaceTypesSearch";
 
+            public const string SendMobileSMSOTP = "SendMobileSMSOTP";
+            public const string SendEmailOTP = "SendEmailOTP";
+
         }
     }    
 
