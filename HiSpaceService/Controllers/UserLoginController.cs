@@ -1,18 +1,16 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using HiSpaceModels;
 using HiSpaceService.Models;
-using Microsoft.AspNetCore.Authorization;
 using HiSpaceService.ViewModel;
 
 namespace HiSpaceService.Controllers
 {
-	[Route("api/[controller]")]
+    [Route("api/[controller]")]
 	[ApiController]
 	public class UserLoginController : ControllerBase
 	{
