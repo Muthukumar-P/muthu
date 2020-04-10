@@ -8,18 +8,21 @@ using System.ComponentModel;
 
 namespace HiSpaceModels
 {
-    [Table("MemberBookingSpaceSeat")]
-    public class MemberBookingSpaceSeat
-    {
-        [Key]
-        public int MemberBookingSpaceSeatID { set; get; }
-        public int? MemberBookingSpaceID { set; get; }
-        public int? ClientSpaceSeatID { set; get; }
-        public double? SeatPrice { set; get; }
-        public string SeatStatus { set; get; }
-        public int? CreatedBy { set; get; }
-        public DateTime? CreatedDateTime { set; get; }
-        public int? ModifyBy { set; get; }
-        public DateTime? ModifyDateTime { set; get; }
-    }
+	[Table("MemberBookingSpaceSeat")]
+	public class MemberBookingSpaceSeat
+	{
+		[Key]
+		public int MemberBookingSpaceSeatID { set; get; }
+
+		public int? MemberBookingSpaceID { set; get; }
+		public int? ClientSpaceSeatID { set; get; }
+		public double? SeatPrice { set; get; }
+		public string SeatStatus { set; get; }
+		public int? CreatedBy { set; get; }
+		public DateTime? CreatedDateTime { set; get; }
+		public int? ModifyBy { set; get; }
+		public DateTime? ModifyDateTime { set; get; }
+		public DateTime? FromDateTime { set; get; }
+		public DateTime? ToDateTime { set; get; }
+	}
 }
