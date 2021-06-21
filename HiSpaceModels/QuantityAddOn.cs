@@ -4,11 +4,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HiSpaceModels
 {	
-	[Table("FacilityAddOn")]
-    public class FacilityAddOn
+	[Table("QuantityAddOn")]
+    public class QuantityAddOn
 	{
 		[Key]
-		public int FacilityAddOnID { set; get; }
+		public int QuantityAddOnID { set; get; }
 		
 		public int? MemberBookingSpaceID { set; get; }
 

@@ -33,7 +33,7 @@ namespace HiSpaceService.Models
 		public DbSet<MemberBookingSpace> MemberBookingSpaces { get; set; }
 		public DbSet<MemberBookingSpaceSeat> MemberBookingSpaceSeats { get; set; }
 		public DbSet<FacilityBooking> FacilityBookings { get; set; }
-		public DbSet<FacilityAddOn> FacilityAddons  { get; set; }
+		public DbSet<QuantityAddOn> QuantityAddOns  { get; set; }
 		public DbSet<ClientFloor> ClientFloors { get; set; }
 		public DbSet<ClientSpaceAvailableTime> ClientSpaceAvailableTimes { get; set; }
 		public DbSet<MyCard> MyCards { get; set; }

@@ -146,7 +146,7 @@ namespace HiSpaceService.Services
 
         async Task<double> GetTotalAddOnsCost(int memberBookingSpaceID)
         {
-           List<FacilityAddOn> bookedAddOns = await (from addOn in _context.FacilityAddons
+           List<QuantityAddOn> bookedAddOns = await (from addOn in _context.QuantityAddOns
 											where addOn.MemberBookingSpaceID == memberBookingSpaceID 
 											&& addOn.IsIncludeInInvoice
 											select addOn).ToListAsync();
@@ -155,7 +155,7 @@ namespace HiSpaceService.Services
 			double amountAfterDiscount = 0;
 			double actualCost = 0;
 			if(bookedAddOns.Count > 0)
-			foreach(FacilityAddOn addOn in bookedAddOns)
+			foreach(QuantityAddOn addOn in bookedAddOns)
 			{
 				actualCost = CostForQuantity(addOn.ActualCost, addOn.Quantity);
 				amountAfterDiscount = AmountAfterDiscount(actualCost, addOn.DiscountPercent);

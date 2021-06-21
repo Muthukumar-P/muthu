@@ -34,18 +34,18 @@ namespace HiSpaceService.Controllers
         [Route("List/{memberBookingSpaceID}")]
         public async Task<ActionResult> List(int? memberBookingSpaceID)
         {
-            List<FacilityAddOn> facilityAddOns = null;
+            List<QuantityAddOn> quantityAddOns = null;
 
             if (memberBookingSpaceID != null && memberBookingSpaceID != 0)
-                facilityAddOns = await _context.FacilityAddons
+                quantityAddOns = await _context.QuantityAddOns
                                     .Where(n => n.MemberBookingSpaceID == memberBookingSpaceID 
                                             && n.IsActive)
                                     .ToListAsync();
             else
                 return BadRequest();
 
-            if (facilityAddOns.Count > 0)
-                return Ok(facilityAddOns);
+            if (quantityAddOns.Count > 0)
+                return Ok(quantityAddOns);
 
             return NotFound();
         }
@@ -58,12 +58,12 @@ namespace HiSpaceService.Controllers
         /// <response code="404">Bad Request</response>
         [HttpPost]
         [Route("Add")]
-        public async Task<ActionResult> Add([FromBody] FacilityAddOn facilityAddOn)
+        public async Task<ActionResult> Add([FromBody] QuantityAddOn quantityAddOn)
         {
             try
             {
-                facilityAddOn.CreatedDateTime = DateTime.Now;                
-                _context.FacilityAddons.Add(facilityAddOn);
+                quantityAddOn.CreatedDateTime = DateTime.Now;                
+                _context.QuantityAddOns.Add(quantityAddOn);
                 int recordsAffected = await _context.SaveChangesAsync();
 
                 if (recordsAffected > 0)
@@ -71,7 +71,7 @@ namespace HiSpaceService.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, facilityAddOn);
+                return StatusCode(500, quantityAddOn);
             }
             return BadRequest();
         }
@@ -95,8 +95,8 @@ namespace HiSpaceService.Controllers
 				{
 					try
 					{
-                        FacilityAddOn addOn = await _context.FacilityAddons
-                                                    .SingleOrDefaultAsync(n => n.FacilityAddOnID == id);
+                        QuantityAddOn addOn = await _context.QuantityAddOns
+                                                    .SingleOrDefaultAsync(n => n.QuantityAddOnID == id);
 
                         int recordsAffected = 0;
                         if (addOn != null)
@@ -131,9 +131,9 @@ namespace HiSpaceService.Controllers
         /// <response code="400">Bad Request</response>
         [HttpPut]
         [Route("Update")]
-        public async Task<ActionResult> Update([FromBody] FacilityAddOn facilityAddOn)
+        public async Task<ActionResult> Update([FromBody] QuantityAddOn quantityAddOn)
         {
-            if (await Exists(facilityAddOn.FacilityAddOnID))
+            if (await Exists(quantityAddOn.QuantityAddOnID))
             {
                 using (var trans = _context.Database.BeginTransaction())
                 {
@@ -142,30 +142,30 @@ namespace HiSpaceService.Controllers
                         try
                         {
                             int recordsAffected = 0;
-                            if (facilityAddOn != null)
+                            if (quantityAddOn != null)
                             {
-                                facilityAddOn.ModifyDateTime = DateTime.Now;
-                                _context.Update(facilityAddOn);
+                                quantityAddOn.ModifyDateTime = DateTime.Now;
+                                _context.Update(quantityAddOn);
                                 recordsAffected = await _context.SaveChangesAsync();
                             }
 
                             if (recordsAffected > 0)
-                                return Ok(facilityAddOn);
+                                return Ok(quantityAddOn);
                         }
                         catch (DbUpdateConcurrencyException)
                         {
                             trans.Rollback();
-                            return StatusCode(500, facilityAddOn);
+                            return StatusCode(500, quantityAddOn);
                         }
                     }
                     catch (Exception ex)
                     {
                         trans.Rollback();
-                        return StatusCode(500, facilityAddOn);
+                        return StatusCode(500, quantityAddOn);
                     }
                 }
             }
-            return NotFound(facilityAddOn);
+            return NotFound(quantityAddOn);
         }
 
 /*         /// <summary>
@@ -229,8 +229,8 @@ namespace HiSpaceService.Controllers
         {
             if(id != 0 && id != null)
             {
-                FacilityAddOn addOn = await _context.FacilityAddons
-                                            .SingleOrDefaultAsync(n => n.FacilityAddOnID == id);
+                QuantityAddOn addOn = await _context.QuantityAddOns
+                                            .SingleOrDefaultAsync(n => n.QuantityAddOnID == id);
                 
                 if (addOn != null) 
                     return true;
